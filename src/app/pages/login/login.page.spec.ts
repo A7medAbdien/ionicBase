@@ -39,4 +39,7 @@ describe('LoginPage', () => {
     expect(router.navigate).toHaveBeenCalledWith(['register']);
   });
 
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
