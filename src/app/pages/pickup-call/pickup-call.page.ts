@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-pickup-call',
@@ -8,12 +9,12 @@ import { Router } from '@angular/router';
 })
 export class PickupCallPage implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
   }
 
   newPickupCall() {
-    this.router.navigate(['home'],);
+    this.navCtrl.navigateBack(['home']);
   }
 }

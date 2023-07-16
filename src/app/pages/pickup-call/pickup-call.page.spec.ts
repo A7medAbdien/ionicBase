@@ -1,25 +1,26 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { PickupCallPage } from './pickup-call.page';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 describe('PickupCallPage', () => {
   let component: PickupCallPage;
   let fixture: ComponentFixture<PickupCallPage>;
-  let router: Router;
+  let navCtrl: NavController;
 
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(PickupCallPage);
-    router = TestBed.inject(Router);
+    navCtrl = TestBed.inject(NavController);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
 
   it('should create a pickup call', () => {
-    spyOn(router, 'navigate');
+    spyOn(navCtrl, 'navigateBack');
 
     component.newPickupCall();
 
-    expect(router.navigate).toHaveBeenCalledWith(['home']);
+    expect(navCtrl.navigateBack).toHaveBeenCalledWith(['home']);
   })
 
   it('should create', () => {
