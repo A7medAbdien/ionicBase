@@ -2,13 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { PickupCallCardComponent } from './components/pickup-call-card/pickup-call-card.component';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
 // import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 
+const components = [
+  PickupCallCardComponent,
+  ErrorMessageComponent,
+];
 
 @NgModule({
   declarations: [
-    PickupCallCardComponent,
+    ...components,
     // CapitalizePipe
   ],
   imports: [
@@ -16,7 +21,7 @@ import { PickupCallCardComponent } from './components/pickup-call-card/pickup-ca
     IonicModule
   ],
   exports: [
-    PickupCallCardComponent
+    ...components,
   ]
 })
 export class SharedModule { }
