@@ -4,6 +4,9 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
-  align-items: center;
+
+  ion-spinner {
+    flex: 1;
+    align-self: center;
+  }
 }

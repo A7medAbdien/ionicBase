@@ -4,6 +4,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from './login.page';
 import { Router } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { loadingReducer } from 'src/app/shared/store/loading/loading.reducers';
 
 describe('LoginPage', () => {
   let component: LoginPage;
@@ -13,7 +15,11 @@ describe('LoginPage', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [LoginPage],
-      imports: [IonicModule.forRoot(), AppRoutingModule]
+      imports: [
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        StoreModule.forRoot([]),
+        StoreModule.forFeature("loading", loadingReducer),]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginPage);
