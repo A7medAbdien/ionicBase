@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { AppRoutingModule } from './../../app-routing.module';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule, ToastController } from '@ionic/angular';
@@ -9,6 +10,8 @@ import { loadingReducer } from 'src/app/shared/store/loading/loading.reducers';
 import { loginReducer } from 'src/app/shared/store/login/login.reducers';
 import { AppState } from 'src/app/shared/store/AppState';
 import { recoverPassword, recoverPasswordFail, recoverPasswordSuccess } from 'src/app/shared/store/login/login.actions';
+import { User } from 'src/app/shared/model/user/User';
+import { of, throwError } from 'rxjs';
 
 describe('LoginPage', () => {
   let component: LoginPage;
@@ -17,6 +20,7 @@ describe('LoginPage', () => {
   let page: any;
   let store: Store<AppState>
   let toastController: ToastController;
+  let authService: AuthService;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -34,6 +38,7 @@ describe('LoginPage', () => {
     router = TestBed.inject(Router);
     store = TestBed.inject(Store);
     toastController = TestBed.inject(ToastController);
+    authService = TestBed.inject(AuthService);
 
     component = fixture.componentInstance;
     page = fixture.debugElement.nativeElement;
@@ -41,13 +46,13 @@ describe('LoginPage', () => {
     fixture.detectChanges();
   }));
 
-  it('should go to home page on login', () => {
-    spyOn(router, 'navigate');
+  // it('should go to home page on login', () => {
+  //   spyOn(router, 'navigate');
 
-    component.login();
+  //   component.login();
 
-    expect(router.navigate).toHaveBeenCalledWith(['home']);
-  });
+  //   expect(router.navigate).toHaveBeenCalledWith(['home']);
+  // });
 
   it('should go to register page on register', () => {
     spyOn(router, 'navigate');
@@ -64,8 +69,8 @@ describe('LoginPage', () => {
 
   it('should recover password on "Recover Email/Password"', () => {
     /**
-     user valid email
-     user click on recover password
+     set valid email
+     click on recover password
      expect loginState.isRecoverPassword = true
      */
 
@@ -76,7 +81,7 @@ describe('LoginPage', () => {
     })
   });
 
-  it('should show loading when loginState as recoveringPassword', () => {
+  it('on recoveringPassword action: should show loading', () => {
     /**
      change recoveringPassword to true
      verify loadingState.isLoading is true
@@ -88,10 +93,10 @@ describe('LoginPage', () => {
     })
   });
 
-  it('should hide loading and show success massage when loginState as recoverPasswordSuccess', () => {
+  it('on recoverPasswordSuccess action: should hide loading and show success massage', () => {
     /**
-     set loginState as recoverPassword
-     set loginState as recoverPasswordSuccess
+     set loginState on recoverPassword
+     set loginState on recoverPasswordSuccess
      verify loadingState.show is false
      show success message (unable to spyOn(toastController, 'create') without error)
      */
@@ -109,10 +114,10 @@ describe('LoginPage', () => {
     // expect(toastController.create).toHaveBeenCalled();
   });
 
-  it('should hide loading and show error massage  when loginState as recoverPasswordFail', () => {
+  it('on recoverPasswordFail action: should hide loading and show error massage', () => {
     /**
-     set loginState as recoverPassword
-     set loginState as recoverPasswordFail
+     set loginState on recoverPassword
+     set loginState on recoverPasswordFail
      verify loadingState.show is false
      show error message (unable to spyOn(toastController, 'create') without error)
      */
@@ -125,6 +130,80 @@ describe('LoginPage', () => {
     store.select('loading').subscribe(loadingState =>
       expect(loadingState.show).toBeFalsy()
     )
+  });
+
+  it('on Login action: should show loading', () => {
+    /**
+     * set a valid email
+     * ser any password
+     * click login button
+     * expect loading to show
+     * expect logging in
+     */
+
+    component.form.controls['email'].setValue('valid@email.com');
+    component.form.controls['password'].setValue('anyPassword');
+    page.querySelector('#loginButton').click();
+
+    store.select('loading').subscribe(loadingState =>
+      expect(loadingState.show).toBeTruthy()
+    );
+    store.select('login').subscribe(loginState =>
+      expect(loginState.isLoggingIn).toBeTruthy()
+    );
+  });
+
+  it('on loginSuccess action: should sends user to home page and hide loading', () => {
+    /**
+     * set a valid email
+     * ser any password
+     * click login button
+     * hide loading
+     * expect logged in
+     * sends user to home page
+     */
+
+    spyOn(router, 'navigate');
+    spyOn(authService, 'login').and.returnValue(of(new User))
+
+    component.form.controls['email'].setValue('valid@email.com');
+    component.form.controls['password'].setValue('anyPassword');
+    page.querySelector('#loginButton').click();
+
+    store.select('loading').subscribe(loadingState =>
+      expect(loadingState.show).toBeFalsy()
+    );
+    store.select('login').subscribe(loginState =>
+      expect(loginState.isLoggedIn).toBeTruthy()
+    );
+
+    expect(router.navigate).toHaveBeenCalledWith(['home']);
+  });
+
+  it('on loginFail action: should show an error massage and hide loading', () => {
+    /**
+     * set a valid email
+     * ser any password
+     * click login button
+     * hide loading
+     * expect error massage (unable to spyOn(toastController, 'create') without error)
+     */
+
+    spyOn(authService, 'login').and.returnValue(throwError(() => { message: 'User not found' }))
+
+    fixture.detectChanges();
+
+    component.form.controls['email'].setValue('error@email.com');
+    component.form.controls['password'].setValue('anyPassword');
+    page.querySelector('#loginButton').click();
+
+    store.select('loading').subscribe(loadingState =>
+      expect(loadingState.show).toBeFalsy()
+    );
+    store.select('login').subscribe(loginState =>
+      expect(loginState.isLoggedIn).toBeFalsy()
+    );
+
   });
 
 });

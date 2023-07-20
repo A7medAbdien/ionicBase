@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { User } from 'src/app/shared/model/user/User';
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +9,28 @@ export class AuthService {
 
   constructor() { }
 
-  recoverEmailPassword(email: string) {
+  recoverEmailPassword(email: string): Observable<void> {
     return new Observable<void>(observer => {
       setTimeout(() => {
         if (email === 'error@email.com') {
-          observer.error({ error: { message: 'Email not found' } });
+          observer.error({ message: 'Email not found' });
         }
         observer.next();
+        observer.complete();
+      }, 3000);
+    });
+  }
+
+  login(email: string, password: string): Observable<User> {
+    return new Observable<User>(observer => {
+      setTimeout(() => {
+        if (email === 'error@email.com') {
+          observer.error({ message: 'User not found' });
+        } else {
+          const user = new User();
+          user.email = email;
+          observer.next(user);
+        }
         observer.complete();
       }, 3000);
     });

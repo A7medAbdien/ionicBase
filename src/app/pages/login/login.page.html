@@ -28,7 +28,8 @@
           <app-error-message *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched"
             [errorMessage]="'Password is required'" />
 
-          <ion-button color="success" size="full" (click)="login()" [disabled]="!form.valid">LOGIN</ion-button>
+          <ion-button id="loginButton" color="success" size="full" (click)="login()"
+            [disabled]="!form.valid">LOGIN</ion-button>
           <ion-button color="success" size="full" fill="clear" (click)="register()">REGISTER</ion-button>
           <ion-button id="recoverPasswordButton" (click)="forgotPassword()" color="dark" size="full" fill="clear"
             [disabled]="!form.controls['email'].valid">Forgot
