@@ -11,7 +11,10 @@ import { loginReducer } from 'src/app/shared/store/login/login.reducers';
 import { AppState } from 'src/app/shared/store/AppState';
 import { recoverPassword, recoverPasswordFail, recoverPasswordSuccess } from 'src/app/shared/store/login/login.actions';
 import { User } from 'src/app/shared/model/user/User';
-import { of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { environment } from 'src/environments/environment';
 
 describe('LoginPage', () => {
   let component: LoginPage;
@@ -31,6 +34,8 @@ describe('LoginPage', () => {
         StoreModule.forRoot([]),
         StoreModule.forFeature("loading", loadingReducer),
         StoreModule.forFeature("login", loginReducer),
+        provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+        provideAuth(() => getAuth()),
       ]
     }).compileComponents();
 
@@ -67,11 +72,12 @@ describe('LoginPage', () => {
   });
 
 
-  it('should recover password on "Recover Email/Password"', () => {
+  it('on recoverPassword action: should show loading', () => {
     /**
-     set valid email
-     click on recover password
-     expect loginState.isRecoverPassword = true
+     * set valid email
+     * click on recover password
+     * change recoveringPassword to true
+     * verify loadingState.isLoading is true
      */
 
     component.form.controls['email'].setValue('valid@email.com');
@@ -79,14 +85,6 @@ describe('LoginPage', () => {
     store.select('login').subscribe(loginState => {
       expect(loginState.isRecoveringPassword).toBeTruthy();
     })
-  });
-
-  it('on recoveringPassword action: should show loading', () => {
-    /**
-     change recoveringPassword to true
-     verify loadingState.isLoading is true
-     */
-
     store.dispatch(recoverPassword());
     store.select('loading').subscribe(loadingState => {
       expect(loadingState.show).toBeTruthy();
@@ -140,6 +138,9 @@ describe('LoginPage', () => {
      * expect loading to show
      * expect logging in
      */
+
+    //
+    spyOn(authService, 'login').and.returnValue(new Observable(() => { }))
 
     component.form.controls['email'].setValue('valid@email.com');
     component.form.controls['password'].setValue('anyPassword');
