@@ -10,9 +10,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppStoreModule } from './shared/store/AppStoreModule';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
+    // AngularFireModule.initializeApp(environment.firebaseConfig),
     ...AppStoreModule,
     StoreDevtoolsModule.instrument({ maxAge: 25 })
   ],
