@@ -31,8 +31,11 @@ npm add @ngrx/store-devtools
    4. loading store
       1. interface LoadingState
       2. actions
-      3. reducers
-   5. 
+      3. reducers 
 
+# Firebase/Auth
 
+https://github.com/angular/angularfire/blob/master/docs/auth.md#authentication
+
+to update the code
 
