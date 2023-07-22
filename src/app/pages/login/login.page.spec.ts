@@ -77,7 +77,7 @@ describe('LoginPage', () => {
     store.select('login').subscribe(loginState => {
       expect(loginState.isRecoveringPassword).toBeTruthy();
     })
-    store.dispatch(recoverPassword());
+    store.dispatch(recoverPassword({ email: "any@email.com" }));
     store.select('loading').subscribe(loadingState => {
       expect(loadingState.show).toBeTruthy();
     })
@@ -91,7 +91,7 @@ describe('LoginPage', () => {
      show success message (unable to spyOn(toastController, 'create') without error)
      */
 
-    store.dispatch(recoverPassword());
+    store.dispatch(recoverPassword({ email: "any@email.com" }));
 
     store.dispatch(recoverPasswordSuccess());
 
@@ -112,7 +112,7 @@ describe('LoginPage', () => {
      show error message (unable to spyOn(toastController, 'create') without error)
      */
 
-    store.dispatch(recoverPassword());
+    store.dispatch(recoverPassword({ email: "any@email.com" }));
 
     const error = { error: 'massage' }
     store.dispatch(recoverPasswordFail(error));

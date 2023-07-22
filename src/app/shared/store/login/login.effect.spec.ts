@@ -40,7 +40,7 @@ describe('Login effects', () => {
   })
 
   it('should recover password with exciting email return success', (done) => {
-    actions$ = of(recoverPassword());
+    actions$ = of(recoverPassword({ email: "any@email.com" }));
 
     effects.recoverPassword$.subscribe((newAction) => {
       expect(newAction).toEqual(recoverPasswordSuccess());
@@ -49,7 +49,7 @@ describe('Login effects', () => {
   })
 
   it('should recover password with not exciting email return an error', (done) => {
-    actions$ = of(recoverPassword());
+    actions$ = of(recoverPassword({ email: "error@email.com" }));
 
     effects.recoverPassword$.subscribe((newAction) => {
       expect(newAction).toEqual(recoverPasswordFail({ error }));
