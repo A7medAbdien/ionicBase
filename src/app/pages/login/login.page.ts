@@ -32,10 +32,10 @@ export class LoginPage implements OnInit, OnDestroy {
     this.initForm();
 
     this.loginStateSub = this.store.select('login').subscribe(loginState => {
-      this.onIsRecoveringPassword(loginState)
+      // this.onIsRecoveringPassword(loginState)
       this.onIsRecoveredPassword(loginState)
 
-      this.onIsLoggingIn(loginState)
+      // this.onIsLoggingIn(loginState)
       this.onIsLoggedIn(loginState)
 
       this.onError(loginState)
@@ -55,17 +55,17 @@ export class LoginPage implements OnInit, OnDestroy {
     }
   }
 
-  private onIsLoggingIn(loginState: LoginState) {
-    if (loginState.isLoggingIn) {
-      const email = this.form.controls['email'].value
-      const password = this.form.controls['password'].value
+  // private onIsLoggingIn(loginState: LoginState) {
+  //   if (loginState.isLoggingIn) {
+  //     const email = this.form.controls['email'].value
+  //     const password = this.form.controls['password'].value
 
-      this.authService.login(email, password).subscribe({
-        next: (user) => this.store.dispatch(loginSuccess({ user })),
-        error: (error) => this.store.dispatch(loginFail({ error }))
-      })
-    }
-  }
+  //     this.authService.login(email, password).subscribe({
+  //       next: (user) => this.store.dispatch(loginSuccess({ user })),
+  //       error: (error) => this.store.dispatch(loginFail({ error }))
+  //     })
+  //   }
+  // }
 
   private toggleLoading(loginState: LoginState) {
     if (loginState.isLoggingIn || loginState.isRecoveringPassword) {
@@ -76,15 +76,15 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
 
-  private onIsRecoveringPassword(loginState: LoginState) {
-    if (loginState.isRecoveringPassword) {
-      this.authService.recoverEmailPassword(this.form.controls['email'].value)
-        .subscribe({
-          next: () => this.store.dispatch(recoverPasswordSuccess()),
-          error: (error) => this.store.dispatch(recoverPasswordFail({ error }))
-        });
-    }
-  }
+  // private onIsRecoveringPassword(loginState: LoginState) {
+  //   if (loginState.isRecoveringPassword) {
+  //     this.authService.recoverEmailPassword(this.form.controls['email'].value)
+  //       .subscribe({
+  //         next: () => this.store.dispatch(recoverPasswordSuccess()),
+  //         error: (error) => this.store.dispatch(recoverPasswordFail({ error }))
+  //       });
+  //   }
+  // }
 
   private async onIsRecoveredPassword(loginState: LoginState) {
     if (loginState.isRecoveredPassword) {
