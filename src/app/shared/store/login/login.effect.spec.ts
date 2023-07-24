@@ -1,24 +1,34 @@
 import { Observable, of, throwError } from "rxjs";
 import { LoginEffects } from "./login.effects";
 import { TestBed } from "@angular/core/testing";
-import { recoverPassword, recoverPasswordFail, recoverPasswordSuccess } from "./login.actions";
+import { login, loginSuccess, recoverPassword, recoverPasswordFail, recoverPasswordSuccess } from "./login.actions";
 import { Action, StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { provideMockActions } from "@ngrx/effects/testing"
 import { AuthService } from "src/app/services/auth/auth.service";
+import { User } from "../../model/user/User";
 
 describe('Login effects', () => {
 
   let effects: LoginEffects;
   let actions$: Observable<Action>;
   let error = { error: 'error' }
+  let user = new User()
+  user.id = "anyId"
+
   let authServiceMock = {
     recoverEmailPassword: (email: string) => {
       if (email == "error@email.com") {
         return throwError(() => error)
       }
       return of({})
-    }
+    },
+    login: (email: string, password: string) => {
+      if (email == "error@email.com") {
+        return throwError(() => error)
+      }
+      return of(user)
+    },
   }
 
   beforeEach(() => {
@@ -49,6 +59,24 @@ describe('Login effects', () => {
   })
 
   it('should recover password with not exciting email return an error', (done) => {
+    actions$ = of(recoverPassword({ email: "error@email.com" }));
+
+    effects.recoverPassword$.subscribe((newAction) => {
+      expect(newAction).toEqual(recoverPasswordFail({ error }));
+      done();
+    })
+  })
+
+  it('should login with valid credentials return success', (done) => {
+    actions$ = of(login({ email: "valid@email.com", password: "anyPassword" }));
+
+    effects.login$.subscribe((newAction) => {
+      expect(newAction).toEqual(loginSuccess({ user }));
+      done();
+    })
+  })
+
+  it('should login with not valid credentials return an error', (done) => {
     actions$ = of(recoverPassword({ email: "error@email.com" }));
 
     effects.recoverPassword$.subscribe((newAction) => {
