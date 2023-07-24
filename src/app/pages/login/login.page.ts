@@ -25,7 +25,7 @@ export class LoginPage implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private store: Store<AppState>,
     private toastController: ToastController,
-    private authService: AuthService
+    // private authService: AuthService
   ) { }
 
   ngOnInit() {
