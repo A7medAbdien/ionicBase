@@ -15,6 +15,10 @@ describe('RegisterPage', () => {
     fixture.detectChanges();
   }));
 
+  it('should create register form on init', () => {
+    expect(component.registerForm).not.toBeUndefined();
+  });
+
   it('should go to home page on login', () => {
     spyOn(router, 'navigate');
 
