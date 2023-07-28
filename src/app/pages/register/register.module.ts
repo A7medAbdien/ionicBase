@@ -8,6 +8,7 @@ import { RegisterPageRoutingModule } from './register-routing.module';
 
 import { RegisterPage } from './register.page';
 import { RegisterPageForm } from './form/register.page.form';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { RegisterPageForm } from './form/register.page.form';
     IonicModule,
     RegisterPageRoutingModule,
     ReactiveFormsModule,
+    SharedModule
   ],
   declarations: [RegisterPage]
 })

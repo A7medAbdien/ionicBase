@@ -17,19 +17,34 @@
         <ion-item>
           <ion-input formControlName="name" label="Name" labelPlacement="floating" />
         </ion-item>
+        <app-error-message [error]="'required'" [field]="form.get('name')" [errorMessage]="'Name is required'" />
+
         <ion-item>
           <ion-input formControlName="email" label="Email" labelPlacement="floating" type="email" />
         </ion-item>
+        <app-error-message [error]="'required'" [field]="form.get('email')" [errorMessage]="'Email is required'" />
+        <app-error-message [error]="'email'" [field]="form.get('email')" [errorMessage]="'Email is invalid'" />
+
         <ion-item>
           <ion-input formControlName="password" label="Password" labelPlacement="floating" type="password" />
         </ion-item>
+        <app-error-message [error]="'required'" [field]="form.get('password')"
+          [errorMessage]="'Password is required'" />
+        <app-error-message [error]="'minlength'" [field]="form.get('password')"
+          [errorMessage]="'Minimum length is 6 characters'" />
+
         <ion-item>
           <ion-input formControlName="repeatPassword" label="repeatPassword" labelPlacement="floating"
             type="password" />
         </ion-item>
+        <app-error-message [error]="'isNotMatching'" [field]="form.get('repeatPassword')"
+          [errorMessage]="'Passwords are not Matching'" />
+
         <ion-item>
           <ion-input formControlName="phone" label="phone" labelPlacement="floating" type="phone" />
         </ion-item>
+        <app-error-message [error]="'required'" [field]="form.get('phone')" [errorMessage]="'Phone is required'" />
+
       </ion-card-content>
     </ion-card>
 
@@ -41,27 +56,47 @@
         <ion-item>
           <ion-input formControlName="street" label="Street" labelPlacement="floating" />
         </ion-item>
+        <app-error-message [error]="'required'" [field]="form.get('address')?.get('street')"
+          [errorMessage]="'Street is required'" />
+
         <ion-item>
           <ion-input formControlName="number" label="Number" labelPlacement="floating" />
         </ion-item>
+        <app-error-message [error]="'required'" [field]="form.get('address')?.get('number')"
+          [errorMessage]="'Number is required'" />
+
         <ion-item>
           <ion-input formControlName="neighborhood" label="Neighborhood" labelPlacement="floating" />
         </ion-item>
+        <app-error-message [error]="'required'" [field]="form.get('address')?.get('neighborhood')"
+          [errorMessage]="'Neighborhood is required'" />
+
         <ion-item>
           <ion-input formControlName="complement" label="Complement" labelPlacement="floating" />
         </ion-item>
+        <app-error-message [error]="'required'" [field]="form.get('address')?.get('complement')"
+          [errorMessage]="'Complement is required'" />
+
         <ion-item>
           <ion-input formControlName="zipCode" label="Zip Code" labelPlacement="floating" />
         </ion-item>
+        <app-error-message [error]="'required'" [field]="form.get('address')?.get('zipCode')"
+          [errorMessage]="'ZipCode is required'" />
+
         <ion-item>
           <ion-input formControlName="state" label="State" labelPlacement="floating" />
         </ion-item>
+        <app-error-message [error]="'required'" [field]="form.get('address')?.get('state')"
+          [errorMessage]="'State is required'" />
+
         <ion-item>
           <ion-input formControlName="city" label="City" labelPlacement="floating" />
         </ion-item>
-      </ion-card-content>
+        <app-error-message [error]="'required'" [field]="form.get('address')?.get('city')"
+          [errorMessage]="'City is required'" />
+        </ ion-card-content>
     </ion-card>
-    <ion-button (click)="register()" size="full" color="light">
+    <ion-button id="registerButton" (click)="register()" size="full" color="light">
       Register
     </ion-button>
   </form>

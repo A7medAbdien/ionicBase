@@ -39,7 +39,7 @@ export class RegisterPageForm {
 }
 
 function matchPasswordAndRepeatPassword(form: FormGroup): ValidatorFn {
-  let validator = () => form.controls['password'].value == form.controls['repeatPassword'].value ? null : { 'isntMatching': true }
+  let validator = () => form.controls['password'].value == form.controls['repeatPassword'].value ? null : { 'isNotMatching': true }
 
   return validator
 }
