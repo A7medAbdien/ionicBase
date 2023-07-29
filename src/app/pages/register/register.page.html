@@ -96,7 +96,7 @@
           [errorMessage]="'City is required'" />
         </ ion-card-content>
     </ion-card>
-    <ion-button id="registerButton" (click)="register()" size="full" color="light">
+    <ion-button id="registerButton" [disabled]="!form.valid" (click)="register()" size="full" color="light">
       Register
     </ion-button>
   </form>
