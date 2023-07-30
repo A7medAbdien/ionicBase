@@ -4,6 +4,7 @@ import { User } from 'src/app/shared/model/user/User';
 
 import { setPersistence, signInWithEmailAndPassword, browserLocalPersistence } from 'firebase/auth';
 import { Auth, UserCredential, sendPasswordResetEmail } from '@angular/fire/auth';
+import { UserRegister } from 'src/app/shared/model/user/UserRegister';
 
 
 @Injectable({
@@ -13,6 +14,19 @@ export class AuthService {
 
   private auth: Auth = inject(Auth);
   constructor() { }
+
+  register(userRegister: UserRegister): Observable<void> {
+    return new Observable<void>(observer => {
+      setTimeout(() => {
+        if (userRegister.email == "error@gmail.com") {
+          observer.error({ massage: "Error" });
+        } else {
+          observer.next();
+        }
+        observer.complete();
+      }, 3000)
+    })
+  }
 
   recoverEmailPassword(email: string): Observable<void> {
     return new Observable<void>(observer => {

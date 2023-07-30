@@ -6,7 +6,7 @@ import { registerReducer } from "./register.reducer"
 describe('Register Store', () => {
   it('register', () => {
     const initialState = { ...AppInitialState.register };
-    const newState = registerReducer(initialState, register({ user: new UserRegister() }));
+    const newState = registerReducer(initialState, register({ userRegister: new UserRegister() }));
 
     expect(newState).toEqual({
       ...initialState,
