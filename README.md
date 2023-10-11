@@ -1,19 +1,33 @@
-# instructions
+# Ionic Template - Ongoing
+
+This project is intended to be a template for small businesses use cases,
+that covers:
+
+1. User Authentication
+2. CURD operations
+3. Google map
+4. Payment
+
+This project uses TDD (test driven development) approach following this [tutorial](https://youtube.com/playlist?list=PLlyAM-8-I7S9iNcZRfP4SQJhm4Mw5q5ku&si=5VuQpXlZhpxzqS2B)
+
+# Instructions
+
+TODO: add the install instructions for iconic 
 
 ```sh
-
 ionic serve
-
 ```
 
-# Ideas
+----
+
+# My notes
+
+## Ideas
 
 [How to hide/show side menu on big screens](https://forum.ionicframework.com/t/how-to-hide-show-side-menu-on-big-screens/207312)
 
 
-----
-
-# 
+## ngrx notes
 
 ```
 npm install --save-dev @types/node
